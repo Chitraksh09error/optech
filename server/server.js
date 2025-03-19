@@ -6,17 +6,25 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-    origin: "https://optech-kappa.vercel.app",
-    methods: "GET,POST,OPTIONS", // Allow OPTIONS
-    allowedHeaders: ["Content-Type"],
-    credentials: true
-}));
+app.use(cors()); // Allow all origins
 
-  
+// ✅ Manually set headers for all responses
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://optech-kappa.vercel.app"); // Replace with your frontend URL
+  res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 app.use(express.json());
 
-const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL; // Store in .env
+const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL;
+
+// ✅ Handle preflight OPTIONS requests
+app.options("*", (req, res) => {
+  res.sendStatus(200);
+});
 
 // Route to send data to Google Sheets
 app.post("/submit", async (req, res) => {
