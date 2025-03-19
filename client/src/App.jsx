@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const SERVER_URL = "https://optech-64va.vercel.app/"; // Update after deploying
+const SERVER_URL = "https://optech-64va.vercel.app"; // Update after deploying
 
 function App() {
   const [formData, setFormData] = useState({ name: "", email: "", dob: "" });
