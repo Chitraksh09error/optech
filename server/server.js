@@ -6,7 +6,12 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: "https://optech-kappa.vercel.app", // Replace with your frontend URL
+    methods: "GET,POST",
+    credentials: true
+  }));
+  
 app.use(express.json());
 
 const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL; // Store in .env
