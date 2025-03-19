@@ -7,10 +7,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-    origin: "https://optech-kappa.vercel.app", // Replace with your frontend URL
-    methods: "GET,POST",
+    origin: "https://optech-kappa.vercel.app",
+    methods: "GET,POST,OPTIONS", // Allow OPTIONS
+    allowedHeaders: ["Content-Type"],
     credentials: true
-  }));
+}));
+
   
 app.use(express.json());
 
